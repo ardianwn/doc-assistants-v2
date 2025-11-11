@@ -646,8 +646,8 @@ docai/
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/ardianwn/learnai.git
-cd learnai
+git clone https://github.com/ardianwn/doc-assistants-v2.git
+cd doc-assistants-v2
 ```
 
 ### 2. Install PostgreSQL
@@ -1206,8 +1206,8 @@ sudo sh get-docker.sh
 
 2. **Clone repository:**
 ```bash
-git clone https://github.com/ardianwn/learnai.git
-cd learnai
+git clone https://github.com/ardianwn/doc-assistants-v2.git
+cd doc-assistants-v2
 ```
 
 3. **Setup backend:**
@@ -1443,7 +1443,7 @@ NEXT_PUBLIC_DEBUG=true
 
 ### Getting Help
 
-- **GitHub Issues**: [github.com/ardianwn/learnai/issues](https://github.com/ardianwn/learnai/issues)
+- **GitHub Issues**: [github.com/ardianwn/doc-assistants-v2/issues](https://github.com/ardianwn/doc-assistants-v2/issues)
 - **Email**: support@docai.com
 - **Documentation**: Check `backend/README.md` and `frontend/README.md`
 
@@ -1530,13 +1530,13 @@ SOFTWARE.
 ### Project Maintainers
 
 - **GitHub**: [@ardianwn](https://github.com/ardianwn)
-- **Repository**: [github.com/ardianwn/learnai](https://github.com/ardianwn/learnai)
+- **Repository**: [github.com/ardianwn/doc-assistants-v2](https://github.com/ardianwn/doc-assistants-v2)
 
 ### Community
 
-- **GitHub Discussions**: [Discussions](https://github.com/ardianwn/learnai/discussions)
-- **Issues**: [Report Bug](https://github.com/ardianwn/learnai/issues)
-- **Feature Requests**: [Request Feature](https://github.com/ardianwn/learnai/issues/new?template=feature_request.md)
+- **GitHub Discussions**: [Discussions](https://github.com/ardianwn/doc-assistants-v2/discussions)
+- **Issues**: [Report Bug](https://github.com/ardianwn/doc-assistants-v2/issues)
+- **Feature Requests**: [Request Feature](https://github.com/ardianwn/doc-assistants-v2/issues/new?template=feature_request.md)
 
 ---
 

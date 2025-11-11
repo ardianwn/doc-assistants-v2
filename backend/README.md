@@ -1293,8 +1293,8 @@ retrieval_semaphore = asyncio.Semaphore(3)  # Max 3 concurrent retrievals
 
 ```bash
 # Clone repository
-git clone https://github.com/ardianwn/learnai.git
-cd learnai/backend
+git clone https://github.com/ardianwn/doc-assistants-v2.git
+cd doc-assistants-v2/backend
 
 # Create virtual environment
 python -m venv venv
@@ -1326,7 +1326,7 @@ This project is proprietary software. All rights reserved.
 ## Support
 
 **Documentation:** This README + `BACKEND_DOCUMENTATION.md`  
-**Repository:** [GitHub - learnai](https://github.com/ardianwn/learnai)  
+**Repository:** [GitHub - doc-assistants-v2](https://github.com/ardianwn/doc-assistants-v2)  
 **Issues:** Create GitHub issue  
 **Version:** 1.0.0  
 **Last Updated:** November 10, 2025
