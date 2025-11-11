@@ -1,0 +1,36 @@
+# Dependencies  
+node_modules/  
+backend/venv/  
+venv/  
+env/  
+.venv/ 
+  
+# Production builds  
+.next/  
+out/  
+build/  
+dist/ 
+  
+# Python  
+__pycache__/  
+*.py[cod]  
+*$py.class  
+*.so 
+  
+# Large binaries  
+*.dll  
+*.lib  
+*.pyd  
+*.node 
+  
+# Environment files  
+.env  
+.env.local  
+.env.production 
+  
+# IDE and OS  
+.vscode/  
+.idea/  
+.DS_Store  
+Thumbs.db 
+backend/docs/n8n-automation-465501-0e65edc4f18b.json 

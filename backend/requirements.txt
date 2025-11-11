@@ -1,0 +1,52 @@
+fastapi
+uvicorn[standard]
+
+# OpenAI
+openai
+
+# LangChain & Komponen Pendukungnya
+langchain
+langchain-community
+langchain-qdrant
+langchain-huggingface
+langchain-chroma
+langchain-ollama
+
+# Embedding
+sentence-transformers
+huggingface-hub
+transformers
+torch
+
+# Qdrant
+qdrant-client
+
+# PDF, DOCX, CSV, TXT parsing
+pypdf
+PyPDF2
+python-docx
+pandas
+openpyxl
+tiktoken
+
+# SQLAlchemy & PostgreSQL
+sqlalchemy
+psycopg2-binary
+asyncpg
+
+# Authentikasi & Security
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt==4.0.1
+
+# Bahasa & Utilitas
+langdetect
+python-multipart
+requests
+python-dotenv
+pytz
+user-agents
+
+# Monitoring & Performance
+psutil
+gunicorn
