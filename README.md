@@ -1,38 +1,48 @@
-# 🚀 DocAI - Intelligent Document Chat Application
+<div align="center">
+  <img src="frontend/public/icon/icon.png" alt="DocAI Logo" width="200"/>
+  
+  # 🚀 DocAI - Intelligent Document Chat Application
 
-> **AI-Powered Document Processing & Chat System**  
-> Built with Next.js 14, FastAPI, OpenAI Assistants API, and Qdrant Vector Database
+  > **AI-Powered Document Processing & Chat System**  
+  > Built with Next.js 14, FastAPI, OpenAI Assistants API, and Qdrant Vector Database
 
-[![Next.js](https://img.shields.io/badge/Next.js-14.0-black?logo=next.js)](https://nextjs.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
-[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python)](https://www.python.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?logo=typescript)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://react.dev/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql)](https://www.postgresql.org/)
-[![Qdrant](https://img.shields.io/badge/Qdrant-1.7+-DC382C?logo=qdrant)](https://qdrant.tech/)
-[![OpenAI](https://img.shields.io/badge/OpenAI-Assistants%20API-412991?logo=openai)](https://platform.openai.com/)
+  [![Next.js](https://img.shields.io/badge/Next.js-14.0-black?logo=next.js)](https://nextjs.org/)
+  [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
+  [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python)](https://www.python.org/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+  [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://react.dev/)
+  [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql)](https://www.postgresql.org/)
+  [![Qdrant](https://img.shields.io/badge/Qdrant-1.7+-DC382C?logo=qdrant)](https://qdrant.tech/)
+  [![OpenAI](https://img.shields.io/badge/OpenAI-Assistants%20API-412991?logo=openai)](https://platform.openai.com/)
+</div>
 
 ---
 
 ## 📋 Table of Contents
 
-1. [Overview](#overview)
-2. [Features](#features)
-3. [System Architecture](#system-architecture)
-4. [Tech Stack](#tech-stack)
-5. [Project Structure](#project-structure)
-6. [Prerequisites](#prerequisites)
-7. [Quick Start](#quick-start)
-8. [Installation](#installation)
-9. [Configuration](#configuration)
-10. [Running the Application](#running-the-application)
-11. [User Roles](#user-roles)
-12. [API Documentation](#api-documentation)
-13. [Screenshots](#screenshots)
-14. [Deployment](#deployment)
-15. [Troubleshooting](#troubleshooting)
-16. [Contributing](#contributing)
-17. [License](#license)
+- [🎯 Overview](#-overview)
+- [✨ Features](#-features)
+  - [🔐 Authentication & User Management](#-authentication--user-management)
+  - [💬 AI Chat Interface](#-ai-chat-interface)
+  - [📄 Document Upload & Processing](#-document-upload--processing)
+  - [🔍 Hybrid Retrieval System](#-hybrid-retrieval-system)
+  - [👨‍💼 Admin Dashboard](#-admin-dashboard)
+  - [🎨 UI/UX Features](#-uiux-features)
+- [🏗️ System Architecture](#️-system-architecture)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📁 Project Structure](#-project-structure)
+- [⚙️ Prerequisites](#️-prerequisites)
+- [🚀 Quick Start](#-quick-start)
+- [📦 Installation](#-installation)
+- [⚙️ Configuration](#️-configuration)
+- [▶️ Running the Application](#️-running-the-application)
+- [👥 User Roles](#-user-roles)
+- [📚 API Documentation](#-api-documentation)
+- [📸 Screenshots](#-screenshots)
+- [🚢 Deployment](#-deployment)
+- [🔧 Troubleshooting](#-troubleshooting)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
 
 ---
 
@@ -1056,31 +1066,99 @@ For detailed API documentation with request/response schemas, visit: http://loca
 
 ## 📸 Screenshots
 
-### Chat Interface
-![Chat Interface](docs/screenshots/chat-interface.png)
-- OpenAI Assistants API integration
-- Thread continuity
-- Message feedback (like/dislike)
-- Markdown rendering with tables
+### 🎨 Logo & Branding
+<div align="center">
+  <img src="docs/screenshots/logo.png" alt="DocAI Logo" width="400"/>
+  <p><em>DocAI - AI-Powered Document Intelligence Platform</em></p>
+</div>
 
-### Document Upload
-![Upload Page](docs/screenshots/upload-page.png)
-- Drag & drop interface
-- Multi-file upload
-- Format validation
-- Progress tracking
+---
 
-### Admin Dashboard
-![Admin Dashboard](docs/screenshots/admin-dashboard.png)
-- User management
-- Role-based access
-- Session monitoring
-- Statistics
+### 👨‍💼 Admin Dashboard - User Management
+<div align="center">
+  <img src="docs/screenshots/admin-users.png" alt="User Management" width="100%"/>
+</div>
 
-### Dark Mode
-![Dark Mode](docs/screenshots/dark-mode.png)
-- System preference detection
-- Seamless theme switching
+**Features:**
+- ✅ View all users with detailed information (ID, role, status, created date, last login)
+- ✅ Search users by username
+- ✅ Filter by role (Admin, User, Uploader)
+- ✅ Add new users with role assignment
+- ✅ Edit user information and toggle active status
+- ✅ Delete users with confirmation
+- ✅ Responsive design - mobile & desktop optimized
+- ✅ Dark mode support
+
+---
+
+### 💬 AI Chat Interface
+<div align="center">
+  <img src="docs/screenshots/chat-interface.png" alt="Chat Interface" width="100%"/>
+</div>
+
+**Features:**
+- ✅ **OpenAI Assistants API** integration with advanced reasoning
+- ✅ **Date-aware queries** - automatic date extraction and filtering
+- ✅ **Thread continuity** - maintains conversation context
+- ✅ **Markdown rendering** - tables, lists, code blocks, bold text
+- ✅ **Message actions** - copy, share, regenerate, read aloud (TTS)
+- ✅ **Edit & regenerate** - edit user questions and get new responses
+- ✅ **Multiple chat sessions** - organized by date
+- ✅ **Voice input** - speech-to-text for hands-free interaction
+- ✅ **Voice output** - text-to-speech to read AI responses
+- ✅ **Dynamic loading indicators** - shows AI processing stages
+- ✅ **Responsive sidebar** - collapsible on desktop, overlay on mobile
+
+---
+
+### ⚙️ Settings & Personalization
+<div align="center">
+  <img src="docs/screenshots/settings-modal.png" alt="Settings Modal" width="100%"/>
+</div>
+
+**Features:**
+- ✅ **Theme selection** - Light, Dark, or System preference
+- ✅ **Account settings** - update profile information
+- ✅ **Privacy & Security** - password change, 2FA setup
+- ✅ **Session management** - view and manage active sessions across devices
+- ✅ **Contact support** - integrated support form
+- ✅ **Location services** - geolocation for personalized experience
+
+---
+
+### 📤 Document Upload
+<div align="center">
+  <img src="docs/screenshots/upload-page.png" alt="Upload Documents" width="100%"/>
+</div>
+
+**Features:**
+- ✅ **Drag & drop** interface with visual feedback
+- ✅ **Multi-file upload** - upload multiple documents at once
+- ✅ **Supported formats** - PDF, DOCX, TXT, CSV, JSON, XLSX
+- ✅ **Format validation** - automatic file type checking
+- ✅ **Smart processing** - automatic text extraction and chunking
+- ✅ **Metadata extraction** - date extraction from filename (e.g., "Report 2025-03-01.pdf")
+- ✅ **Vector embedding** - semantic search with Qdrant
+- ✅ **BM25 indexing** - keyword-based search
+- ✅ **Role-based access** - only Uploader and Admin roles can upload
+
+---
+
+### 📄 Document Management
+<div align="center">
+  <img src="docs/screenshots/docs-management.png" alt="Document Management" width="100%"/>
+</div>
+
+**Features:**
+- ✅ **View all documents** - table view with detailed information
+- ✅ **Search documents** - find by filename
+- ✅ **Filter by status** - Uploaded, Processing, Ready, Error
+- ✅ **Document details** - chunks, metadata, processing parameters
+- ✅ **Delete documents** - remove from database and vector store
+- ✅ **Retry processing** - reprocess failed documents
+- ✅ **Chunk inspection** - view individual chunks with expand/collapse
+- ✅ **Status tracking** - monitor upload and processing progress
+- ✅ **Responsive design** - optimized for all screen sizes
 
 ---
 

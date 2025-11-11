@@ -37,7 +37,7 @@ export default function SessionsPage() {
 
   return (
     <ProtectedRoute allowedRoles={['admin']}>
-      <div className="flex h-screen bg-gray-50 dark:bg-gray-900 relative">
+      <div className="flex h-screen bg-gray-50 dark:bg-gray-800 relative">
         {/* Sidebar Component */}
         <AdminSidebar
           isOpen={isSidebarOpen}
@@ -48,7 +48,7 @@ export default function SessionsPage() {
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           {/* Header with toggle button */}
-          <div className="bg-white dark:bg-gray-900">
+          <div className="bg-white dark:bg-gray-800">
             <div className="flex items-center gap-3 px-4 py-3">
               {/* Mobile toggle button - only visible on mobile */}
               <button

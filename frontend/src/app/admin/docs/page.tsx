@@ -5,18 +5,18 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import { Loading } from '@/components/ui';
 import { authAPI } from '@/lib/auth';
 import {
-    AlertCircle,
-    CheckCircle,
-    ChevronDown,
-    ChevronUp,
-    Clock,
-    Eye,
-    FileText,
-    Menu,
-    RefreshCw,
-    Search,
-    Trash2,
-    XCircle
+  AlertCircle,
+  CheckCircle,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  Eye,
+  FileText,
+  Menu,
+  RefreshCw,
+  Search,
+  Trash2,
+  XCircle
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -280,7 +280,7 @@ export default function DocsManagementPage() {
 
   return (
     <ProtectedRoute allowedRoles={['admin']}>
-      <div className="flex h-screen bg-gray-50 dark:bg-gray-900 relative">
+      <div className="flex h-screen bg-gray-50 dark:bg-gray-800 relative">
         <AdminSidebar
           isOpen={isSidebarOpen}
           onClose={closeSidebar}
@@ -288,7 +288,7 @@ export default function DocsManagementPage() {
         />
 
         <div className="flex-1 flex flex-col min-w-0">
-          <div className="bg-white dark:bg-gray-900">
+          <div className="bg-white dark:bg-gray-800">
             <div className="flex items-center gap-3 px-4 py-3">
               <button
                 onClick={toggleSidebar}
@@ -302,16 +302,17 @@ export default function DocsManagementPage() {
 
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-600">
-              <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-600">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Documents Management</h3>
+              <div className="px-4 sm:px-6 py-4 border-b border-gray-200 dark:border-gray-600">
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-100">Documents Management</h3>
                   <button 
                     onClick={fetchDocuments}
-                    className="bg-[#1A829B] text-white px-4 py-2 rounded-md hover:bg-[#146B7C] transition-colors flex items-center space-x-2"
+                    className="bg-[#1A829B] text-white px-3 sm:px-4 py-2 rounded-md hover:bg-[#146B7C] transition-colors flex items-center gap-2"
                     disabled={loading}
+                    title={loading ? 'Loading...' : 'Refresh'}
                   >
                     <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                    <span>Refresh</span>
+                    <span className="hidden sm:inline">Refresh</span>
                   </button>
                 </div>
               </div>
@@ -327,14 +328,14 @@ export default function DocsManagementPage() {
                         placeholder="Search documents..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-[#1A829B] focus:border-[#1A829B]"
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-[#1A829B] focus:border-[#1A829B]"
                       />
                     </div>
                   </div>
                   <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value)}
-                    className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-[#1A829B] focus:border-[#1A829B]"
+                    className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-[#1A829B] focus:border-[#1A829B]"
                   >
                     <option value="all">All Status</option>
                     <option value="uploaded">Uploaded</option>
@@ -367,7 +368,7 @@ export default function DocsManagementPage() {
                           <div className="flex items-center">
                             <FileText className="w-5 h-5 text-[#1A829B] mr-2" />
                             <div>
-                              <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{doc.filename}</div>
+                              <div className="text-sm font-medium text-gray-800 dark:text-gray-100">{doc.filename}</div>
                               <div className="text-xs text-gray-500 dark:text-gray-400">By {doc.uploaded_by}</div>
                             </div>
                           </div>
@@ -440,10 +441,10 @@ export default function DocsManagementPage() {
 
             {/* Document Detail Modal */}
             {showDetailModal && selectedDoc && (
-              <div className="fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-75 overflow-y-auto h-full w-full z-50">
+              <div className="fixed inset-0 bg-gray-600 dark:bg-gray-800 bg-opacity-50 dark:bg-opacity-75 overflow-y-auto h-full w-full z-50">
                 <div className="relative top-10 mx-auto p-5 border border-gray-200 dark:border-gray-600 max-w-4xl shadow-lg rounded-md bg-white dark:bg-gray-800 mb-10">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
                       Document Details
                     </h3>
                     <button
@@ -461,11 +462,11 @@ export default function DocsManagementPage() {
                   <div className="space-y-4">
                     {/* Document Info */}
                     <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                      <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Document Information</h4>
+                      <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">Document Information</h4>
                       <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
                           <span className="text-gray-500 dark:text-gray-400">Filename:</span>
-                          <span className="ml-2 text-gray-900 dark:text-gray-100">{selectedDoc.filename}</span>
+                          <span className="ml-2 text-gray-800 dark:text-gray-100">{selectedDoc.filename}</span>
                         </div>
                         <div>
                           <span className="text-gray-500 dark:text-gray-400">Status:</span>
@@ -473,27 +474,27 @@ export default function DocsManagementPage() {
                         </div>
                         <div>
                           <span className="text-gray-500 dark:text-gray-400">Size:</span>
-                          <span className="ml-2 text-gray-900 dark:text-gray-100">{formatFileSize(selectedDoc.file_size)}</span>
+                          <span className="ml-2 text-gray-800 dark:text-gray-100">{formatFileSize(selectedDoc.file_size)}</span>
                         </div>
                         <div>
                           <span className="text-gray-500 dark:text-gray-400">Type:</span>
-                          <span className="ml-2 text-gray-900 dark:text-gray-100">{selectedDoc.file_type}</span>
+                          <span className="ml-2 text-gray-800 dark:text-gray-100">{selectedDoc.file_type}</span>
                         </div>
                         <div>
                           <span className="text-gray-500 dark:text-gray-400">Pages:</span>
-                          <span className="ml-2 text-gray-900 dark:text-gray-100">{selectedDoc.page_count || 'N/A'}</span>
+                          <span className="ml-2 text-gray-800 dark:text-gray-100">{selectedDoc.page_count || 'N/A'}</span>
                         </div>
                         <div>
                           <span className="text-gray-500 dark:text-gray-400">Chunks:</span>
-                          <span className="ml-2 text-gray-900 dark:text-gray-100">{selectedDoc.chunk_count || 0}</span>
+                          <span className="ml-2 text-gray-800 dark:text-gray-100">{selectedDoc.chunk_count || 0}</span>
                         </div>
                         <div>
                           <span className="text-gray-500 dark:text-gray-400">Uploaded:</span>
-                          <span className="ml-2 text-gray-900 dark:text-gray-100">{formatDate(selectedDoc.uploaded_at)}</span>
+                          <span className="ml-2 text-gray-800 dark:text-gray-100">{formatDate(selectedDoc.uploaded_at)}</span>
                         </div>
                         <div>
                           <span className="text-gray-500 dark:text-gray-400">Processed:</span>
-                          <span className="ml-2 text-gray-900 dark:text-gray-100">
+                          <span className="ml-2 text-gray-800 dark:text-gray-100">
                             {selectedDoc.processed_at ? formatDate(selectedDoc.processed_at) : 'Not yet'}
                           </span>
                         </div>
@@ -503,19 +504,19 @@ export default function DocsManagementPage() {
                     {/* Processing Parameters */}
                     {selectedDoc.embedding_model && (
                       <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Processing Parameters</h4>
+                        <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">Processing Parameters</h4>
                         <div className="grid grid-cols-2 gap-4 text-sm">
                           <div>
                             <span className="text-gray-500 dark:text-gray-400">Chunk Size:</span>
-                            <span className="ml-2 text-gray-900 dark:text-gray-100">{selectedDoc.chunk_size}</span>
+                            <span className="ml-2 text-gray-800 dark:text-gray-100">{selectedDoc.chunk_size}</span>
                           </div>
                           <div>
                             <span className="text-gray-500 dark:text-gray-400">Chunk Overlap:</span>
-                            <span className="ml-2 text-gray-900 dark:text-gray-100">{selectedDoc.chunk_overlap}</span>
+                            <span className="ml-2 text-gray-800 dark:text-gray-100">{selectedDoc.chunk_overlap}</span>
                           </div>
                           <div className="col-span-2">
                             <span className="text-gray-500 dark:text-gray-400">Embedding Model:</span>
-                            <span className="ml-2 text-gray-900 dark:text-gray-100">{selectedDoc.embedding_model}</span>
+                            <span className="ml-2 text-gray-800 dark:text-gray-100">{selectedDoc.embedding_model}</span>
                           </div>
                         </div>
                       </div>
@@ -532,12 +533,12 @@ export default function DocsManagementPage() {
                     {/* Chunks List */}
                     {selectedDoc.chunks && selectedDoc.chunks.length > 0 && (
                       <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Chunks ({selectedDoc.chunks.length})</h4>
+                        <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">Chunks ({selectedDoc.chunks.length})</h4>
                         <div className="space-y-2 max-h-96 overflow-y-auto">
                           {selectedDoc.chunks.map((chunk) => (
                             <div key={chunk.id} className="bg-white dark:bg-gray-800 p-3 rounded border border-gray-200 dark:border-gray-600">
                               <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                <span className="text-sm font-medium text-gray-800 dark:text-gray-100">
                                   Chunk #{chunk.chunk_index + 1}
                                 </span>
                                 <div className="flex items-center space-x-2">

@@ -146,7 +146,7 @@ export default function UploadPage() {
   }
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="p-4 sm:p-6 lg:p-8 min-h-screen bg-gray-50 dark:bg-gray-800">
       <div className="max-w-7xl mx-auto">
         {/* Upload Area */}
         <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6 mb-6">
@@ -154,7 +154,7 @@ export default function UploadPage() {
             <div className="w-16 h-16 bg-[#B3E5E8] rounded-full flex items-center justify-center mx-auto mb-3">
               <Upload className="w-8 h-8 text-[#1A829B]" />
             </div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
               Upload Documents
             </h2>
             <p className="text-gray-600 dark:text-gray-400 text-sm">
@@ -214,7 +214,7 @@ export default function UploadPage() {
         {/* Uploaded Files List */}
         {uploadedFiles.length > 0 && (
           <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6 mb-6">
-            <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-4">
+            <h3 className="text-base font-semibold text-gray-800 dark:text-gray-100 mb-4">
               Uploaded Files ({uploadedFiles.length})
             </h3>
             <div className="space-y-2">
@@ -243,7 +243,7 @@ export default function UploadPage() {
                     <div className="flex items-center gap-2">
                       <span className="text-base">{getFileIcon(file.name)}</span>
                       <div>
-                        <p className="font-medium text-gray-900 dark:text-gray-100 text-sm">{file.name}</p>
+                        <p className="font-medium text-gray-800 dark:text-gray-100 text-sm">{file.name}</p>
                         <p className="text-xs text-gray-500 dark:text-gray-400">
                           {formatFileSize(file.size)} • {file.timestamp.toLocaleTimeString()}
                         </p>

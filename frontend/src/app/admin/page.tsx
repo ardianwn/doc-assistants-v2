@@ -6,17 +6,17 @@ import { Loading } from '@/components/ui';
 import { useAuth } from '@/contexts/AuthContext';
 import { authAPI } from '@/lib/auth';
 import {
-    AlertCircle,
-    CheckCircle,
-    Edit,
-    Menu,
-    Plus,
-    Search,
-    Trash2,
-    User,
-    Users,
-    X,
-    XCircle
+  AlertCircle,
+  CheckCircle,
+  Edit,
+  Menu,
+  Plus,
+  Search,
+  Trash2,
+  User,
+  Users,
+  X,
+  XCircle
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -364,7 +364,7 @@ export default function AdminPage() {
 
   return (
     <ProtectedRoute allowedRoles={['admin']}>
-      <div className="flex h-screen bg-gray-50 dark:bg-gray-900 relative">
+      <div className="flex h-screen bg-gray-50 dark:bg-gray-800 relative">
         {/* Sidebar Component */}
         <AdminSidebar
           isOpen={isSidebarOpen}
@@ -375,7 +375,7 @@ export default function AdminPage() {
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col min-w-0">
           {/* Header with toggle button */}
-          <div className="bg-white dark:bg-gray-900">
+          <div className="bg-white dark:bg-gray-800">
             <div className="flex items-center gap-3 px-4 py-3">
               {/* Mobile toggle button - only visible on mobile */}
               <button
@@ -391,23 +391,26 @@ export default function AdminPage() {
           {/* Content */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-600">
-              <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-600">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">User Management</h3>
-                  <div className="text-xs flex space-x-2">
+              <div className="px-4 sm:px-6 py-4 border-b border-gray-200 dark:border-gray-600">
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-100">User Management</h3>
+                  <div className="flex gap-2">
                     <button 
                       onClick={() => openUserModal()}
-                      className="bg-[#1A829B] text-white px-4 py-2 rounded-md hover:bg-[#146B7C] transition-colors flex items-center space-x-2"
+                      className="bg-[#1A829B] text-white px-3 sm:px-4 py-2 rounded-md hover:bg-[#146B7C] transition-colors flex items-center gap-2"
+                      title="Add User"
                     >
                       <Plus className="w-4 h-4" />
-                      <span>Add User</span>
+                      <span className="hidden sm:inline">Add User</span>
                     </button>
                     <button 
                       onClick={fetchUsers}
-                      className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors flex items-center space-x-2"
+                      className="bg-gray-600 text-white px-3 sm:px-4 py-2 rounded-md hover:bg-gray-700 transition-colors"
                       disabled={loading}
+                      title={loading ? 'Loading...' : 'Refresh'}
                     >
-                      <span>{loading ? 'Loading...' : 'Refresh'}</span>
+                      <span className="hidden sm:inline">{loading ? 'Loading...' : 'Refresh'}</span>
+                      <span className="sm:hidden">↻</span>
                     </button>
                   </div>
                 </div>
@@ -424,7 +427,7 @@ export default function AdminPage() {
                         placeholder="Search users..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-[#1A829B] focus:border-[#1A829B]"
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-[#1A829B] focus:border-[#1A829B]"
                       />
                     </div>
                   </div>
@@ -432,7 +435,7 @@ export default function AdminPage() {
                     <select
                       value={filterRole}
                       onChange={(e) => setFilterRole(e.target.value)}
-                      className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-[#1A829B] focus:border-[#1A829B]"
+                      className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-[#1A829B] focus:border-[#1A829B]"
                     >
                       <option value="all">All Roles</option>
                       <option value="admin">Admin</option>
@@ -465,7 +468,7 @@ export default function AdminPage() {
                               <User className="w-4 h-4 text-[#1A829B]" />
                             </div>
                             <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{user.username}</div>
+                              <div className="text-sm font-medium text-gray-800 dark:text-gray-100">{user.username}</div>
                               <div className="text-sm text-gray-500 dark:text-gray-400">ID: {user.id}</div>
                             </div>
                           </div>
@@ -531,10 +534,10 @@ export default function AdminPage() {
 
           {/* User Modal */}
           {showUserModal && (
-            <div className="fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-75 overflow-y-auto h-full w-full z-50">
+            <div className="fixed inset-0 bg-gray-600 dark:bg-gray-800 bg-opacity-50 dark:bg-opacity-75 overflow-y-auto h-full w-full z-50">
               <div className="relative top-20 mx-auto p-5 border border-gray-200 dark:border-gray-600 w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
                     {editingUser ? 'Edit User' : 'Add New User'}
                   </h3>
                   <button
@@ -595,7 +598,7 @@ export default function AdminPage() {
                       onChange={(e) => setUserFormData(prev => ({ ...prev, is_active: e.target.checked }))}
                       className="h-4 w-4 text-[#1A829B] focus:ring-[#1A829B] border-gray-300 rounded"
                     />
-                    <label htmlFor="is_active" className="ml-2 block text-sm text-gray-900 dark:text-gray-100">
+                    <label htmlFor="is_active" className="ml-2 block text-sm text-gray-800 dark:text-gray-100">
                       Active
                     </label>
                   </div>
