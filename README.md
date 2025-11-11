@@ -1068,7 +1068,7 @@ For detailed API documentation with request/response schemas, visit: http://loca
 
 ### 🎨 Logo & Branding
 <div align="center">
-  <img src="docs/screenshots/logo.png" alt="DocAI Logo" width="400"/>
+  <img src="frontend/public/icon/icon.png" alt="DocAI Logo" width="400"/>
   <p><em>DocAI - AI-Powered Document Intelligence Platform</em></p>
 </div>
 
@@ -1076,7 +1076,7 @@ For detailed API documentation with request/response schemas, visit: http://loca
 
 ### 👨‍💼 Admin Dashboard - User Management
 <div align="center">
-  <img src="docs/screenshots/admin-users.png" alt="User Management" width="100%"/>
+  <img src="backend/uploads/profile_images/admin-preview.png" alt="User Management" width="100%"/>
 </div>
 
 **Features:**
@@ -1093,7 +1093,7 @@ For detailed API documentation with request/response schemas, visit: http://loca
 
 ### 💬 AI Chat Interface
 <div align="center">
-  <img src="docs/screenshots/chat-interface.png" alt="Chat Interface" width="100%"/>
+  <img src="backend/uploads/profile_images/chat-preview.png" alt="Chat Interface" width="100%"/>
 </div>
 
 **Features:**
@@ -1113,7 +1113,7 @@ For detailed API documentation with request/response schemas, visit: http://loca
 
 ### ⚙️ Settings & Personalization
 <div align="center">
-  <img src="docs/screenshots/settings-modal.png" alt="Settings Modal" width="100%"/>
+  <img src="backend/uploads/profile_images/switch-theme.png" alt="Settings Modal" width="100%"/>
 </div>
 
 **Features:**
@@ -1128,7 +1128,7 @@ For detailed API documentation with request/response schemas, visit: http://loca
 
 ### 📤 Document Upload
 <div align="center">
-  <img src="docs/screenshots/upload-page.png" alt="Upload Documents" width="100%"/>
+  <img src="backend\uploads\profile_images\upload-page.png" alt="Upload Documents" width="100%"/>
 </div>
 
 **Features:**
@@ -1141,24 +1141,6 @@ For detailed API documentation with request/response schemas, visit: http://loca
 - ✅ **Vector embedding** - semantic search with Qdrant
 - ✅ **BM25 indexing** - keyword-based search
 - ✅ **Role-based access** - only Uploader and Admin roles can upload
-
----
-
-### 📄 Document Management
-<div align="center">
-  <img src="docs/screenshots/docs-management.png" alt="Document Management" width="100%"/>
-</div>
-
-**Features:**
-- ✅ **View all documents** - table view with detailed information
-- ✅ **Search documents** - find by filename
-- ✅ **Filter by status** - Uploaded, Processing, Ready, Error
-- ✅ **Document details** - chunks, metadata, processing parameters
-- ✅ **Delete documents** - remove from database and vector store
-- ✅ **Retry processing** - reprocess failed documents
-- ✅ **Chunk inspection** - view individual chunks with expand/collapse
-- ✅ **Status tracking** - monitor upload and processing progress
-- ✅ **Responsive design** - optimized for all screen sizes
 
 ---
 
