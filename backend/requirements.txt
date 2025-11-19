@@ -1,43 +1,46 @@
-fastapi
-uvicorn[standard]
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
 
 # OpenAI
-openai
+openai>=1.0.0
 
-# LangChain & Komponen Pendukungnya
-langchain
-langchain-community
-langchain-qdrant
-langchain-ollama
+# LangChain & Komponen Pendukungnya (pin to specific versions to avoid resolution hell)
+langchain==0.3.0
+langchain-community==0.3.0
+langchain-qdrant==0.2.0
+langchain-ollama==0.2.0
 
-# Qdrant
-qdrant-client
+# Qdrant (upgrade to match langchain-qdrant requirements)
+qdrant-client>=1.10.1,<2.0.0
 
 # PDF, DOCX, CSV, TXT parsing
-pypdf
-PyPDF2
-python-docx
-pandas
-tiktoken
+pypdf>=3.0.0
+PyPDF2>=3.0.0
+python-docx>=0.8.11
+pandas>=2.0.0
+tiktoken>=0.5.0
 
 # SQLAlchemy & PostgreSQL
-sqlalchemy
-psycopg2-binary
-asyncpg
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0
+asyncpg>=0.29.0
 
 # Authentikasi & Security
-python-jose[cryptography]
-passlib[bcrypt]
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
 bcrypt==4.0.1
+pyotp>=2.9.0
+qrcode>=7.0.0
+pillow>=10.0.0
 
 # Bahasa & Utilitas
-langdetect
-python-multipart
-requests
-python-dotenv
-pytz
-user-agents
+langdetect>=1.0.9
+python-multipart>=0.0.6
+requests>=2.31.0
+python-dotenv>=1.0.0
+pytz>=2023.3
+user-agents>=2.2.0
 
 # Monitoring & Performance
-psutil
-gunicorn
+psutil>=5.9.0
+gunicorn>=21.0.0

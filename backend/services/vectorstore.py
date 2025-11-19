@@ -29,6 +29,7 @@ def get_qdrant_client():
             api_key=qdrant_api_key if qdrant_api_key else None,
             timeout=120,
             prefer_grpc=False,
+            check_compatibility=False,
         )
     return local_storage.client
 
@@ -38,16 +39,28 @@ def get_qdrant_vectorstore(embedding):
     client = get_qdrant_client()
     collection_name = "my_documents"
 
-    if not client.collection_exists(collection_name):
+    # Check if collection exists - handle 404 as "not exists"
+    try:
+        collection_exists = client.collection_exists(collection_name)
+    except Exception as e:
+        # 404 or connection errors mean collection doesn't exist
+        logger.warning(f"Error checking collection existence: {e}")
+        collection_exists = False
+
+    if not collection_exists:
         print("📦 Koleksi belum ada, membuat koleksi baru dengan konfigurasi optimal...")
-        client.recreate_collection(
-            collection_name=collection_name,
-            vectors_config=VectorParams(
-                size=len(embedding.embed_query("test")),
-                distance=Distance.COSINE
+        try:
+            client.recreate_collection(
+                collection_name=collection_name,
+                vectors_config=VectorParams(
+                    size=len(embedding.embed_query("test")),
+                    distance=Distance.COSINE
+                )
             )
-        )
-        print("✅ Koleksi dibuat dengan konfigurasi search yang dioptimalkan")
+            print("✅ Koleksi dibuat dengan konfigurasi search yang dioptimalkan")
+        except Exception as e:
+            logger.error(f"Failed to create collection: {e}")
+            raise
 
     # Create vectorstore using langchain_qdrant.QdrantVectorStore
     vectorstore = QdrantVectorStore(

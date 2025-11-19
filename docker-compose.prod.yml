@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # PostgreSQL Database
   postgres:
@@ -33,7 +31,7 @@ services:
 
   # Qdrant Vector Database
   qdrant:
-    image: qdrant/qdrant:v1.7.4  # Pin version untuk stability
+    image: qdrant/qdrant:v1.16.0  # Updated to match qdrant-client 1.16.0
     container_name: docai-qdrant
     # Internal port only
     expose:
@@ -75,7 +73,7 @@ services:
     networks:
       - docai-network
     restart: always
-    # GPU support (uncomment jika punya NVIDIA GPU)
+    # GPU support - Disabled (uncomment jika punya NVIDIA GPU)
     deploy:
       resources:
         limits:
@@ -84,10 +82,11 @@ services:
         reservations:
           cpus: '2.0'
           memory: 4G
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
+          # GPU disabled - uncomment lines below if you have NVIDIA GPU
+          # devices:
+          #   - driver: nvidia
+          #     count: 1
+          #     capabilities: [gpu]
 
   # Backend (FastAPI)
   backend:
