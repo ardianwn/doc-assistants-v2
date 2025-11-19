@@ -8,15 +8,7 @@ openai
 langchain
 langchain-community
 langchain-qdrant
-langchain-huggingface
-langchain-chroma
 langchain-ollama
-
-# Embedding
-sentence-transformers
-huggingface-hub
-transformers
-torch
 
 # Qdrant
 qdrant-client
@@ -26,7 +18,6 @@ pypdf
 PyPDF2
 python-docx
 pandas
-openpyxl
 tiktoken
 
 # SQLAlchemy & PostgreSQL

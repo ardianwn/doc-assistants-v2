@@ -1,0 +1,156 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: docai-postgres
+    environment:
+      POSTGRES_USER: docai_user
+      POSTGRES_PASSWORD: docai_password
+      POSTGRES_DB: docai_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docai_user -d docai_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - docai-network
+    restart: unless-stopped
+
+  # Qdrant Vector Database
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: docai-qdrant
+    ports:
+      - "6333:6333"  # REST API
+      - "6334:6334"  # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - docai-network
+    restart: unless-stopped
+
+  # Ollama (Embedding Model Server)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: docai-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - docai-network
+    restart: unless-stopped
+    # GPU support (uncomment jika punya NVIDIA GPU)
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+  # Backend (FastAPI)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: docai-backend
+    environment:
+      # Database
+      DATABASE_URL: postgresql://docai_user:docai_password@postgres:5432/docai_db
+      
+      # Qdrant
+      QDRANT_URL: http://qdrant:6333
+      
+      # Ollama
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_EMBEDDING_MODEL: bge-m3:latest
+      
+      # OpenAI (ganti dengan API key Anda)
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_CHAT_MODEL: gpt-4o
+      OPENAI_TEMPERATURE: 0.7
+      OPENAI_MAX_TOKENS: 2000
+      
+      # Security
+      SECRET_KEY: ${SECRET_KEY:-your-super-secret-key-change-in-production}
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 10080
+      
+      # CORS
+      ALLOWED_ORIGINS: http://localhost:3000,http://localhost:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./backend/uploads:/app/uploads
+      - ./backend/data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
+    networks:
+      - docai-network
+    restart: unless-stopped
+    command: >
+      sh -c "
+        echo 'Waiting for Ollama to be ready...' &&
+        sleep 10 &&
+        echo 'Pulling BGE-M3 model...' &&
+        curl -X POST http://ollama:11434/api/pull -d '{\"name\": \"bge-m3:latest\"}' || true &&
+        echo 'Starting FastAPI server...' &&
+        uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+      "
+
+  # Frontend (Next.js)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: docai-frontend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - backend
+    networks:
+      - docai-network
+    restart: unless-stopped
+
+# Networks
+networks:
+  docai-network:
+    driver: bridge
+
+# Volumes for data persistence
+volumes:
+  postgres_data:
+    driver: local
+  qdrant_data:
+    driver: local
+  ollama_data:
+    driver: local
