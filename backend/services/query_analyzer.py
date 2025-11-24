@@ -49,6 +49,52 @@ def is_comparative_query(query: str) -> bool:
     return False
 
 
+def is_general_document_query(query: str) -> bool:
+    """
+    Detect if query is asking about general documents that don't need date filtering
+    
+    Examples:
+        "SOP rawat inap" → True
+        "prosedur startup" → True
+        "apa itu NPHR" → True
+        "kebijakan cuti" → True
+    """
+    query_lower = query.lower()
+    
+    # Keywords that indicate general document queries (not date-specific)
+    general_doc_keywords = [
+        r"\bsop\b",
+        r"\bprosedur\b",
+        r"\bprocedure\b",
+        r"\bmanual\b",
+        r"\bpanduan\b",
+        r"\bguide\b",
+        r"\bkebijakan\b",
+        r"\bpolicy\b",
+        r"\bkontrak\b",
+        r"\bcontract\b",
+        r"\bapa itu\b",
+        r"\bjelaskan\b",
+        r"\bexplain\b",
+        r"\bwhat is\b",
+        r"\bbagaimana cara\b",
+        r"\bhow to\b",
+        r"\btroubleshooting\b",
+        r"\bstandar\b",
+        r"\bstandard\b",
+        r"\bpersyaratan\b",
+        r"\brequirement\b",
+        r"\bpetunjuk\b",
+        r"\binstruction\b",
+    ]
+    
+    for pattern in general_doc_keywords:
+        if re.search(pattern, query_lower):
+            return True
+    
+    return False
+
+
 def extract_month_year_context(query: str) -> Optional[dict]:
     """
     Extract month and year from query to generate date range
@@ -56,7 +102,6 @@ def extract_month_year_context(query: str) -> Optional[dict]:
     Examples:
         "... di Maret 2025" → {"month": 3, "year": 2025}
         "... pada March" → {"month": 3, "year": 2025}  # assume current year
-        "laporan tanggal berapa" without month → {"month": 3, "year": 2025}  # assume March 2025
     """
     query_lower = query.lower()
     
@@ -101,19 +146,6 @@ def extract_month_year_context(query: str) -> Optional[dict]:
             
             if month:
                 return {"month": month, "year": year}
-    
-    # If query mentions "laporan" or "report" but no specific month/date
-    # Assume March 2025 (common context based on user queries)
-    if re.search(r"laporan|report|shift", query_lower):
-        # Check if there's any year mentioned
-        year_match = re.search(r"20\d{2}", query_lower)
-        if year_match:
-            year = int(year_match.group(0))
-        else:
-            year = 2025
-        
-        # Default to March (month 3) based on context
-        return {"month": 3, "year": year}
     
     return None
 
@@ -160,11 +192,16 @@ def analyze_query_and_get_dates(query: str, parsed_dates: List[str]) -> tuple[Li
     
     query_lower = query.lower()
     
-    # If dates already parsed, use them
+    # PRIORITY 1: Check if this is a general document query (SOP, manual, policy, etc.)
+    # These should NEVER use date filtering
+    if is_general_document_query(query):
+        return [], "no_filter"
+    
+    # PRIORITY 2: If dates already parsed explicitly, use them
     if parsed_dates and len(parsed_dates) > 0:
         return parsed_dates, "explicit"
     
-    # Check if query asks for LATEST/LAST/MOST RECENT data
+    # PRIORITY 3: Check if query asks for LATEST/LAST/MOST RECENT data
     latest_keywords = [
         r"\bterakhir\b",
         r"\bterbaru\b",
@@ -184,7 +221,7 @@ def analyze_query_and_get_dates(query: str, parsed_dates: List[str]) -> tuple[Li
             # Backend will provide the most recent date(s) from database
             return [], "latest"
     
-    # Check if query is comparative/analytical
+    # PRIORITY 4: Check if query is comparative/analytical (needs multiple dates)
     if is_comparative_query(query):
         # Try to extract month context
         month_context = extract_month_year_context(query)
@@ -202,5 +239,5 @@ def analyze_query_and_get_dates(query: str, parsed_dates: List[str]) -> tuple[Li
             # Backend will inject ALL available dates from database
             return [], "all_available"
     
-    # No dates found
+    # DEFAULT: No dates found, no filter needed
     return [], "no_filter"

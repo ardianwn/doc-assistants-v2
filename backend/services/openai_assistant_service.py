@@ -39,11 +39,11 @@ class OpenAIAssistantService:
         
         # Define assistant configuration
         if language == "id":
-            name = "DocAI Production Shift Report Analyst"
-            instructions = """Anda adalah asisten AI ahli yang menganalisis laporan shift report produksi.
+            name = "DocAI Document Analyst"
+            instructions = """Anda adalah asisten AI ahli yang menganalisis berbagai jenis dokumen (laporan, kontrak, manual, artikel, dll).
 
 PENTING - CARA KERJA TANGGAL:
-- Database berisi dokumen laporan shift dengan berbagai tanggal
+- Database berisi berbagai jenis dokumen dengan berbagai tanggal
 - System backend akan OTOMATIS memberikan tanggal yang relevan lewat [SYSTEM HINT]
 - JANGAN menebak atau assume tanggal tertentu
 - SELALU gunakan tanggal dari [SYSTEM HINT] yang diberikan backend
@@ -52,37 +52,42 @@ PENTING - CARA KERJA TANGGAL:
 - Jika tidak ada [SYSTEM HINT], tanyakan ke user tanggal mana yang ingin dianalisis
 
 CARA KERJA:
-1. Pahami pertanyaan user
-2. WAJIB cek [SYSTEM HINT] untuk mendapat tanggal yang benar dari backend
-3. Gunakan function 'retrieve_documents' dengan tanggal dari [SYSTEM HINT]
+1. Pahami pertanyaan user tentang dokumen apa saja (laporan, kontrak, artikel, dll)
+2. WAJIB cek [SYSTEM HINT] untuk mendapat tanggal yang benar dari backend (jika relevan)
+3. Gunakan function 'retrieve_documents' dengan query yang tepat dan tanggal dari [SYSTEM HINT]
 4. JANGAN pernah gunakan tanggal selain yang diberikan [SYSTEM HINT]
 5. Untuk pertanyaan komparatif, backend akan berikan multiple tanggal - gunakan SEMUA
-6. Setelah mendapat dokumen, analisis dengan teliti dan ekstrak data numerik
+6. Setelah mendapat dokumen, analisis dengan teliti:
+   - Untuk dokumen teknis/laporan: ekstrak data numerik, metrik, target
+   - Untuk kontrak/legal: ekstrak klausul penting, tanggal, pihak terkait
+   - Untuk artikel/manual: ekstrak informasi relevan, langkah-langkah, prosedur
 7. Berikan jawaban lengkap dengan:
-   - Data numerik dari setiap tanggal
+   - Informasi relevan dari dokumen
    - Sumber (file dan halaman)
-   - Analisis tren atau pola (jika multiple tanggal)
+   - Analisis atau ringkasan sesuai jenis dokumen
    - Kesimpulan yang jelas
 
 FORMAT JAWABAN:
 - Gunakan struktur yang jelas dengan heading
 - Untuk data numerik, gunakan format: "Target / Achieved: X / Y (Loss/Save: Z%)"
-- Pisahkan setiap tanggal dengan heading yang jelas
-- Di akhir, berikan section "Kesimpulan:" untuk summary sesuai dengan analisis data yang ada
-- Sertakan sumber di setiap section data: "Sumber: [Nama File], halaman [X]"
+- Untuk informasi umum, gunakan bullet points atau paragraf yang terstruktur
+- Pisahkan setiap bagian dengan heading yang jelas
+- Di akhir, berikan section "Kesimpulan:" atau "Ringkasan:" untuk summary
+- Sertakan sumber di setiap section: "Sumber: [Nama File], halaman [X]"
 
 ATURAN PENTING:
 - SELALU prioritaskan [SYSTEM HINT] untuk tanggal
 - Jangan katakan "data tidak tersedia" sebelum mencoba retrieve
-- Berikan jawaban dengan data numerik yang akurat dari dokumen
-- Sertakan sumber untuk setiap data yang Anda sebutkan
-- Jika tidak ada [SYSTEM HINT] dan pertanyaan tidak spesifik tanggal, minta clarifikasi ke user"""
+- Berikan jawaban yang akurat dari dokumen
+- Sertakan sumber untuk setiap data/informasi yang Anda sebutkan
+- Jika tidak ada [SYSTEM HINT] dan pertanyaan memerlukan tanggal, minta clarifikasi ke user
+- Untuk pertanyaan umum tanpa tanggal, retrieve dokumen berdasarkan keyword/topik saja"""
         else:
-            name = "DocAI Production Shift Report Analyst"
-            instructions = """You are an expert AI assistant for shift report analysis.
+            name = "DocAI Document Analyst"
+            instructions = """You are an expert AI assistant for analyzing various types of documents (reports, contracts, manuals, articles, etc.).
 
 IMPORTANT - HOW DATES WORK:
-- Database contains shift report documents with various dates
+- Database contains various types of documents with various dates
 - Backend system will AUTOMATICALLY provide relevant dates via [SYSTEM HINT]
 - NEVER guess or assume specific dates
 - ALWAYS use dates from [SYSTEM HINT] provided by backend
@@ -91,31 +96,36 @@ IMPORTANT - HOW DATES WORK:
 - If no [SYSTEM HINT], ask user which dates to analyze
 
 HOW TO WORK:
-1. Understand user's question
-2. MUST check [SYSTEM HINT] to get correct dates from backend
-3. Use 'retrieve_documents' function with dates from [SYSTEM HINT]
+1. Understand user's question about any type of document (reports, contracts, articles, etc.)
+2. MUST check [SYSTEM HINT] to get correct dates from backend (if applicable)
+3. Use 'retrieve_documents' function with appropriate query and dates from [SYSTEM HINT]
 4. NEVER use dates other than those provided by [SYSTEM HINT]
 5. For comparative questions, backend will provide multiple dates - use ALL of them
-6. After getting documents, analyze carefully and extract numerical data
+6. After getting documents, analyze carefully based on document type:
+   - For technical/reports: extract numerical data, metrics, targets
+   - For contracts/legal: extract important clauses, dates, parties involved
+   - For articles/manuals: extract relevant information, steps, procedures
 7. Provide complete answer with:
-   - Numerical data from each date
+   - Relevant information from documents
    - Sources (file and page)
-   - Trend or pattern analysis (if multiple dates)
+   - Analysis or summary based on document type
    - Clear conclusion
 
 ANSWER FORMAT:
 - Use clear structure with headings
 - For numerical data, use format: "Target / Achieved: X / Y (Loss/Save: Z%)"
-- Separate each date with clear heading
-- At the end, provide "Conclusion:" section for summary according to existing data analysis
-- Include sources in each data section: "Source: [File Name], page [X]"
+- For general information, use bullet points or structured paragraphs
+- Separate each section with clear headings
+- At the end, provide "Conclusion:" or "Summary:" section
+- Include sources in each section: "Source: [File Name], page [X]"
 
 CRITICAL RULES:
 - ALWAYS prioritize [SYSTEM HINT] for dates
 - Don't say "data not available" before trying to retrieve
-- Provide answers with accurate numerical data from documents
-- Include sources for every data point you mention
-- If no [SYSTEM HINT] and question doesn't specify dates, ask user for clarification"""
+- Provide accurate answers from documents
+- Include sources for every data point or information you mention
+- If no [SYSTEM HINT] and question requires dates, ask user for clarification
+- For general questions without dates, retrieve documents based on keywords/topics only"""
         
         # Define tools/functions
         tools = [
@@ -123,21 +133,21 @@ CRITICAL RULES:
                 "type": "function",
                 "function": {
                     "name": "retrieve_documents",
-                    "description": "Retrieve shift report documents from local vectorstore based on query and dates. Use this when you need to get actual data from shift reports.",
+                    "description": "Retrieve documents from local vectorstore based on query and dates. Use this to get actual data from any type of document (reports, contracts, manuals, articles, etc.). Works with or without date filtering.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "query": {
                                 "type": "string",
-                                "description": "Search query to retrieve relevant documents. Include relevant keywords like unit names, metrics (NPHR, load, efficiency), etc."
+                                "description": "Search query to retrieve relevant documents. Include relevant keywords based on document type (e.g., unit names, metrics, contract terms, procedure steps, topics, etc.)."
                             },
                             "dates": {
                                 "type": "array",
                                 "items": {"type": "string"},
-                                "description": "List of dates in YYYY-MM-DD format to retrieve documents from. Provide ALL relevant dates for the question. Example: ['2025-03-01', '2025-03-02', '2025-03-03'] for a 3-day range."
+                                "description": "Optional: List of dates in YYYY-MM-DD format to filter documents by date. Leave empty [] if the question doesn't require date filtering (e.g., general document search). Provide ALL relevant dates for time-specific questions. Example: ['2025-03-01', '2025-03-02', '2025-03-03'] for a 3-day range."
                             }
                         },
-                        "required": ["query", "dates"]
+                        "required": ["query"]
                     }
                 }
             }
@@ -165,39 +175,54 @@ CRITICAL RULES:
     async def _retrieve_documents_function(
         self, 
         query: str, 
-        dates: List[str]
+        dates: List[str] = None
     ) -> str:
         """
         Function called by OpenAI Assistant to retrieve documents from local Qdrant
+        Supports both date-filtered and general document retrieval
         Returns JSON string with retrieved documents
         """
         try:
             print(f"🔍 [ASSISTANT TOOL] retrieve_documents called")
             print(f"   Query: {query}")
-            print(f"   Dates: {dates} (total: {len(dates)})")
+            print(f"   Dates: {dates} (total: {len(dates) if dates else 0})")
             logger.info(f"[ASSISTANT TOOL] retrieve_documents called with query='{query}', dates={dates}")
             
             all_docs = []
             
-            # Multi-date retrieval (parallel)
-            import asyncio
-            
-            async def retrieve_for_date(date: str):
-                filters = {"date": date}
-                print(f"🔍 [ASSISTANT TOOL] Retrieving for date: {date}")
+            # Check if dates are provided
+            if dates and len(dates) > 0:
+                # Multi-date retrieval (parallel) - for date-specific queries
+                import asyncio
+                
+                async def retrieve_for_date(date: str):
+                    filters = {"date": date}
+                    print(f"🔍 [ASSISTANT TOOL] Retrieving for date: {date}")
+                    docs = await self.hybrid_retriever.retrieve_async(
+                        query, 
+                        k_dense=15,      # Increased from 10 for better recall
+                        k_bm25=15,       # Increased from 10 for better recall
+                        final_k=5,       # Increased from 3 - 5 best docs per date (balance recall vs tokens)
+                        filters=filters
+                    )
+                    print(f"✅ [ASSISTANT TOOL] Date {date}: Found {len(docs)} documents")
+                    return docs
+                
+                results = await asyncio.gather(*[retrieve_for_date(date) for date in dates])
+                for docs in results:
+                    all_docs.extend(docs)
+            else:
+                # General document retrieval without date filter - for topic-based queries
+                print(f"🔍 [ASSISTANT TOOL] Retrieving documents without date filter (general search)")
                 docs = await self.hybrid_retriever.retrieve_async(
                     query, 
-                    k_dense=15,      # Increased from 10 for better recall
-                    k_bm25=15,       # Increased from 10 for better recall
-                    final_k=5,       # Increased from 3 - 5 best docs per date (balance recall vs tokens)
-                    filters=filters
+                    k_dense=20,      # More docs for general search
+                    k_bm25=20,       # More docs for general search
+                    final_k=10,      # Return top 10 most relevant docs
+                    filters=None     # No date filtering
                 )
-                print(f"✅ [ASSISTANT TOOL] Date {date}: Found {len(docs)} documents")
-                return docs
-            
-            results = await asyncio.gather(*[retrieve_for_date(date) for date in dates])
-            for docs in results:
-                all_docs.extend(docs)
+                all_docs = docs
+                print(f"✅ [ASSISTANT TOOL] General search: Found {len(docs)} documents")
             
             print(f"📊 [ASSISTANT TOOL] Total docs: {len(all_docs)}")
             
@@ -343,14 +368,25 @@ CRITICAL RULES:
                 enhanced_query = user_query + date_hint
                 print(f"💡 [ASSISTANT] Injected date hint into message")
             else:
-                # No dates detected - let assistant ask user for clarification
-                print(f"⚠️ [ASSISTANT] No dates detected - assistant will ask user for clarification")
-                if detected_lang == "id":
-                    date_hint = f"\n\n[SYSTEM HINT: Query tidak menyebutkan tanggal spesifik. JANGAN menebak tanggal. Database memiliki dokumen untuk tanggal: {date_range_info.get('min_date')} s/d {date_range_info.get('max_date')} ({len(available_dates)} tanggal). Tanyakan ke user tanggal mana yang ingin dianalisis, atau minta user untuk spesifik periode yang dimaksud.]"
+                # No dates detected - check strategy to determine hint
+                if strategy == "no_filter":
+                    # General document query (SOP, manual, etc.) - NO need to mention dates
+                    print(f"📄 [ASSISTANT] General document query detected (strategy: no_filter) - NO date hint needed")
+                    if detected_lang == "id":
+                        date_hint = f"\n\n[SYSTEM HINT: Ini adalah query untuk dokumen UMUM (SOP/manual/kebijakan/prosedur). JANGAN gunakan filter tanggal. Panggil retrieve_documents dengan dates=[] (kosong) untuk mencari di SEMUA dokumen berdasarkan topik/keyword saja.]"
+                    else:
+                        date_hint = f"\n\n[SYSTEM HINT: This is a GENERAL document query (SOP/manual/policy/procedure). DO NOT use date filtering. Call retrieve_documents with dates=[] (empty) to search ALL documents based on topic/keywords only.]"
+                    
+                    enhanced_query = user_query + date_hint
                 else:
-                    date_hint = f"\n\n[SYSTEM HINT: Query doesn't mention specific dates. DON'T guess dates. Database has documents for dates: {date_range_info.get('min_date')} to {date_range_info.get('max_date')} ({len(available_dates)} dates). Ask user which dates they want to analyze, or ask them to be more specific about the time period.]"
-                
-                enhanced_query = user_query + date_hint
+                    # Other strategies - may need date clarification
+                    print(f"⚠️ [ASSISTANT] No dates detected - assistant may ask user for clarification (strategy: {strategy})")
+                    if detected_lang == "id":
+                        date_hint = f"\n\n[SYSTEM HINT: Query tidak menyebutkan tanggal spesifik. Database memiliki dokumen untuk tanggal: {date_range_info.get('min_date')} s/d {date_range_info.get('max_date')} ({len(available_dates)} tanggal). Jika query memerlukan data spesifik dari tanggal tertentu, tanyakan ke user tanggal mana yang ingin dianalisis. Jika query bersifat umum, gunakan dates=[] untuk search tanpa filter tanggal.]"
+                    else:
+                        date_hint = f"\n\n[SYSTEM HINT: Query doesn't mention specific dates. Database has documents for dates: {date_range_info.get('min_date')} to {date_range_info.get('max_date')} ({len(available_dates)} dates). If query needs specific date data, ask user which dates to analyze. If query is general, use dates=[] to search without date filter.]"
+                    
+                    enhanced_query = user_query + date_hint
             
             # Add message to thread
             await self.client.beta.threads.messages.create(

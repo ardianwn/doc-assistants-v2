@@ -176,7 +176,7 @@ class HybridRetriever:
         target_date = filters.get("date") if filters else None
         logger.info(f"🔍 STRICT DATE FILTERING: Target date = {target_date}")
         
-        # Step 1: Dense search with STRICT date filter
+        # Step 1: Dense search with STRICT date filter OR no filter
         if target_date:
             try:
                 # Apply Qdrant payload filter by date
@@ -205,6 +205,14 @@ class HybridRetriever:
                     
             except Exception as e:
                 logger.error(f"❌ Dense search with filter failed: {e}")
+        else:
+            # No date filter - general document search
+            try:
+                dense_results = self.vectorstore.similarity_search(query, k=k_dense)
+                logger.info(f"📊 Dense search WITHOUT date filter: {len(dense_results)} documents")
+                candidates.append(dense_results)
+            except Exception as e:
+                logger.error(f"❌ Dense search without filter failed: {e}")
         
         # Step 2: BM25 search with STRICT date filtering
         if target_date:
@@ -268,7 +276,7 @@ class HybridRetriever:
             target_date = filters.get("date") if filters else None
             logger.info(f"[ASYNC RETRIEVAL] Target date = {target_date}")
             
-            # Step 1: Dense search with STRICT date filter (async)
+            # Step 1: Dense search with STRICT date filter OR no filter (async)
             if target_date:
                 try:
                     # Apply Qdrant payload filter by date
@@ -305,6 +313,18 @@ class HybridRetriever:
 
                 except Exception as e:
                     logger.error(f"❌ ASYNC Dense search with filter failed: {e}")
+            else:
+                # No date filter - general document search (async)
+                try:
+                    dense_results = await asyncio.to_thread(
+                        self.vectorstore.similarity_search,
+                        query,
+                        k=k_dense
+                    )
+                    logger.info(f"[ASYNC] Dense search WITHOUT date filter: {len(dense_results)} documents")
+                    candidates.append(dense_results)
+                except Exception as e:
+                    logger.error(f"❌ ASYNC Dense search without filter failed: {e}")
             
             # Step 2: BM25 search with STRICT date filtering (async)
             if target_date:
