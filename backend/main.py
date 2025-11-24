@@ -71,19 +71,11 @@ async def shutdown_event():
     
     print("✅ Shutdown complete")
 
-# Add monitoring middleware
-from routes.monitoring import track_request_middleware
-app.middleware("http")(track_request_middleware)
-
 # Include Routes
 app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 app.include_router(upload_router, prefix="/upload", tags=["Upload"])
 app.include_router(chat_router, prefix="/chat", tags=["Chat"])
 app.include_router(admin_router, prefix="/admin", tags=["Admin"])
-
-# Add monitoring router
-from routes.monitoring import router as monitoring_router
-app.include_router(monitoring_router, prefix="/monitoring", tags=["System Monitoring"])
 
 # Serve uploaded files
 os.makedirs("uploads/profile_images", exist_ok=True)
