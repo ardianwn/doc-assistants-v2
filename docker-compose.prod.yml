@@ -85,10 +85,10 @@ services:
           cpus: '2.0'
           memory: 4G
           # GPU disabled - uncomment lines below if you have NVIDIA GPU
-          # devices:
-          #   - driver: nvidia
-          #     count: 1
-          #     capabilities: [gpu]
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
   # Backend (FastAPI)
   backend:
